@@ -71,7 +71,10 @@ printBtn.addEventListener("click", () => {
         doc.open();
         doc.write(flood_info + map); 
         doc.close();
-        console.log(m)
+            setTimeout(function() { 
+            myWindow.print(); 
+             }, 1000);
+        
     });
       
     };  
