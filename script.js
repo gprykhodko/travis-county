@@ -21,7 +21,10 @@ require([
     });
     const view = new MapView({
       map: webmap,
-      container: "viewDiv"
+      container: "viewDiv",
+      popup: {
+        alignment: "top-right"
+      }
     });
 
 // url to the print service
