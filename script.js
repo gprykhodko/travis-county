@@ -102,15 +102,12 @@ printBtn.addEventListener("click", () => {
         };
 
         // Create a symbol for drawing the point
-        var markerSymbol = {
-          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-          style: "x",
-          color: "blue",
-          size: "16px",  // pixels
-          outline: {  // autocasts as new SimpleLineSymbol()
-          color: "blue",
-          width: 3  // points
-              }
+          let markerSymbol = {
+            type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+            url: "https://static.arcgis.com/images/Symbols/Basic/RedStickpin.png",
+            width: "44px",
+            height: "44px",
+            yoffset: "19px"
           };
         
 
