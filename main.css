@@ -24,3 +24,28 @@ body,
   border: 1px solid #0079c1;
   color: white;
 }
+
+.esri-icon-documentation:before {
+  color: #0f0e0b;
+  /*font-size: 18px;*/
+  position: relative;
+  bottom: 2px;
+}
+
+.esri-popup__action-image {
+  position: relative;
+  bottom: 2px;
+}
+
+.esri-view-width-medium .esri-popup__main-container {
+  width: 240px;
+}
+
+.esri-view-width-large .esri-popup__main-container {
+  width: 250px;
+}
+
+.esri-view-width-xlarge .esri-popup__main-container {
+  width: 310px
+;
+}
