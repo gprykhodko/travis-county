@@ -2,12 +2,34 @@
 
 html,
 body,
-#viewDiv {
+#heading {
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
+  background-color: #18191a;
 }
+
+#header {
+  text-align: left;
+  background: #161817;
+  color: rgb(255, 255, 255);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 24pt;
+}
+
+
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: calc(100% - 40px);
+  width: 100%;
+}
+
+
 
 #instruction {
   z-index: 99;
@@ -100,6 +122,7 @@ body,
   width: 150px;
 }
 
+
 .esri-icon-non-visible::before {
   content: "\e610";
   }
@@ -108,3 +131,16 @@ body,
   .esri-icon-visible::before {
     content: "\e611";
   }
+
+
+  .esri-view-height-medium .esri-expand .esri-widget--panel, .esri-view-height-medium .esri-expand .esri-widget--panel-height-only, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel-height-only {
+    max-height: 700px;
+}
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
