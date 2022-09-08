@@ -1,5 +1,3 @@
-
-
 require([
   "esri/config",
   "esri/WebMap",
@@ -100,7 +98,7 @@ require([
   });
 
   //Justice Court and Constable Precincts Feature Service
-  const courts = new FeatureLayer({
+ /* const courts = new FeatureLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Judge_and_Constable_Precincts/MapServer/0",
     visible: false,
     title: "Justice Court and Constable Precincts",
@@ -118,7 +116,7 @@ require([
         }
       ]
     }
-  });
+  });*/
 
     //1 Percent Depth Image
     const depth1 = new MapImageLayer({
@@ -178,7 +176,7 @@ require([
 
   const webmap = new Map({
     basemap: "satellite", 
-    layers: [countyBoundary, cityBoundary, courts, esd, wsel02, wsel1, depth02, depth1,  facilities]
+    layers: [countyBoundary, cityBoundary, /*courts,*/ esd, wsel02, wsel1, depth02, depth1,  facilities]
   });
 
   
