@@ -97,6 +97,78 @@ require([
     }
   });
 
+  const roads = new FeatureLayer({
+    url: "https://services.arcgis.com/0L95CJ0VTaxqcmED/ArcGIS/rest/services/TRANSPORTATION_street_segment/FeatureServer",
+    visible: false,
+    opacity: 0.5,
+    title: "Roads"
+  });
+
+
+
+  /*const roads = new MapImageLayer({
+    url: "https://gis.traviscountytx.gov/server1/rest/services/Public_Works/Travis_County_Roads/MapServer",
+    opacity: 0.5,
+    listMode: "hide-children",
+    title: "Roads",
+    visible: false,
+    sublayers: [
+      {
+        id: 41
+      }
+    ]
+
+}); */
+
+
+const nws = new MapImageLayer({
+  url: "https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer",
+  opacity: 0.5,
+  //listMode: "hide-children",
+  title: "NWS",
+  visible: false
+
+});
+
+
+const subdivs = new MapImageLayer({
+  url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Subdivisions/MapServer",
+  opacity: 0.5,
+  listMode: "hide-children",
+  title: "Subdivisions",
+  visible: false,
+  sublayers: [
+    {
+      id: 0
+    }
+  ]
+
+});
+
+
+
+  const etj = new MapImageLayer({
+    url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Municipal_Jurisdictions_Boundaries/MapServer/",
+    opacity: 0.5,
+    listMode: "hide-children",
+    title: "Municipal ETJs (without City of Austin)",
+    visible: false
+
+});
+
+    //Parcel boundary
+    const parcels = new MapImageLayer({
+      url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/TCAD_public/MapServer/",
+      opacity: 0.5,
+      listMode: "hide-children",
+      title: "Parcel Boundaries",
+      visible: false
+  
+  });
+
+//query?f=json&returnIdsOnly=true&returnCountOnly=true&where=1=1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&geometry={"rings":[[[-10902803.442420805,3546178.5591347795],[-10902803.442420805,3550363.486433503],[-10898212.443409307,3550363.486433503],[-10898212.443409307,3546178.5591347795],[-10902803.442420805,3546178.5591347795]]],"spatialReference":{"wkid":102100,"latestWkid":3857}}&geometryType=esriGeometryPolygon&inSR=102100&outSR=102100
+  
+
   //Justice Court and Constable Precincts Feature Service
  /* const courts = new FeatureLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Judge_and_Constable_Precincts/MapServer/0",
@@ -176,7 +248,7 @@ require([
 
   const webmap = new Map({
     basemap: "satellite", 
-    layers: [countyBoundary, cityBoundary, /*courts,*/ esd, wsel02, wsel1, depth02, depth1,  facilities]
+    layers: [countyBoundary, cityBoundary, etj, subdivs, /*courts,*/ parcels, esd, nws, roads, wsel02, wsel1, depth02, depth1,  facilities]
   });
 
   
