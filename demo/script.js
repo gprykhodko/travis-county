@@ -1333,7 +1333,7 @@ require([
 
   const webmap = new Map({
     basemap: "satellite",
-    layers: [referenceLayers, nws, floodRiskLayers]
+    layers: [referenceLayers, floodRiskLayers]
   });
 
   const view = new MapView({
