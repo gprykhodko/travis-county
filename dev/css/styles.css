@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+html,
+body,
+#heading {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #18191a;
+}
+
+#header {
+  text-align: left;
+  background: #161817;
+  color: rgb(255, 255, 255);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 24pt;
+}
+
+
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: calc(100% - 60px);
+  width: 100%;
+}
+
+
+#halffLogoDiv {
+  padding: 0px;
+  background-color:rgba(25, 25, 25, 0.788);
+  position: absolute;
+  left: 8px;
+  bottom: 25px;
+  text-align: inherit;
+  width: 100px;
+}
+
+#halffLogoDiv img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/*
+.esri-layer-list-panel {
+  margin: -10px 15px;
+} */
+
+.esri-slider.esri-widget.esri-slider--horizontal{
+  font-size: 11px;
+}
+
+.esri-legend__layer-caption {
+  display: none;
+}
+
+.esri-basemap-toggle__title {
+  font-size: 10px;
+  background-color: rgb(6 4 4 / 70%);
+}
+
+.esri-search {
+  width: 300px;
+}
+
+.esri-view .esri-view-surface--inset-outline:focus::after {
+  outline: none;
+}‍‍‍
+
+.print-button:hover,
+.print-button:focus {
+  background-color: lightsteelblue;
+}
+
+.print-button {
+  flex-grow: 4;
+  font-size: 20px;
+  height: 32px;
+  margin: 5px;
+  width: 160px;
+  background-color:rgb(25, 25, 25);
+  border: 1px solid rgb(25, 25, 25);
+  color: white;
+}
+
+.esri-icon-documentation:before {
+  color: #0f0e0b;
+  /*font-size: 18px;*/
+  position: relative;
+  bottom: 2px;
+}
+
+.esri-popup__action-image {
+  position: relative;
+  bottom: 2px;
+}
+
+.esri-view-width-medium .esri-popup__main-container {
+  width: 240px;
+}
+
+.esri-view-width-large .esri-popup__main-container {
+  width: 250px;
+}
+
+.esri-view-width-xlarge .esri-popup__main-container {
+  width: 310px
+;
+}
+
+
+.esri-icon-non-visible::before {
+  content: "\e610";
+  }
+
+
+  .esri-icon-visible::before {
+    content: "\e611";
+  }
+
+
+  .esri-view-height-medium .esri-expand .esri-widget--panel, .esri-view-height-medium .esri-expand .esri-widget--panel-height-only, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel-height-only {
+    max-height: 700px;
+}
+
