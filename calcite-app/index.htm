@@ -1,0 +1,256 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Calcite Components: Create a theme switcher</title>
+
+    <script src="https://js.arcgis.com/calcite-components/1.0.0-beta.94/calcite.esm.js" type="module"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.94/calcite.css" />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <link disabled id="jsapi-theme-dark" rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/dark/main.css" />
+
+    <link id="jsapi-theme-light" rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css" />
+
+  </head>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      display: flex;
+    }
+
+    calcite-loader {
+      align-self: center;
+      justify-self: center;
+    }
+
+    #header-title {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    #info-content {
+      padding: 0.75rem;
+    }
+
+    calcite-rating {
+      margin-top: 0.25rem;
+    }
+
+    #header {
+      display: flex;
+      padding: 0 1rem;
+      background-color: var(--calcite-ui-foreground-1);
+    }
+
+    #header-controls {
+      display: flex;
+      margin-inline-start: auto;
+      align-self: center;
+    }
+
+    .label-wrapper {
+      display: flex;
+      margin-inline: 1rem;
+      padding: 0.5rem;
+      border: 1px solid var(--calcite-ui-border-1);
+      cursor: pointer;
+    }
+
+    calcite-switch {
+      margin: 0 0.5rem;
+    }
+
+  </style>
+
+  <body>
+    <calcite-loader active></calcite-loader>
+    <calcite-shell content-behind hidden>
+
+      <!--  Header slot  -->
+      <div slot="header" id="header">
+
+        <!-- Title -->
+        <h2 id="header-title">
+          <!-- Dynamically populated -->
+        </h2>
+
+        <!-- Controls -->
+        <div id="header-controls">
+          <!-- Dark Mode Switch -->
+          <calcite-label disable-spacing layout="inline" class="label-wrapper">
+            <calcite-icon icon="brightness" scale="s" class="switch-icon"></calcite-icon>
+            <calcite-switch></calcite-switch>
+            <calcite-icon icon="moon" scale="s" class="switch-icon"></calcite-icon>
+          </calcite-label>
+        </div>
+      </div>
+
+      <calcite-shell-panel slot="primary-panel" detached>
+        <calcite-action-bar slot="action-bar">
+          <calcite-action data-action-id="layers" icon="layers" text="Layers"></calcite-action>
+          <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
+          <calcite-action data-action-id="legend" icon="legend" text="Legend"></calcite-action>
+          <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks"></calcite-action>
+          <calcite-action data-action-id="print" icon="print" text="Print"></calcite-action>
+          <calcite-action data-action-id="information" icon="information" text="Information"></calcite-action>
+        </calcite-action-bar>
+        <!-- Map-specific panels (each one provides a div for ArcGIS JavaScript API widgets) -->
+        <calcite-panel heading="Layers" height-scale="l" data-panel-id="layers" hidden>
+          <div id="layers-container"></div>
+        </calcite-panel>
+        <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
+          <div id="basemaps-container"></div>
+        </calcite-panel>
+        <calcite-panel heading="Legend" height-scale="l" data-panel-id="legend" hidden>
+          <div id="legend-container"></div>
+        </calcite-panel>
+        <calcite-panel heading="Bookmarks" height-scale="l" data-panel-id="bookmarks" hidden>
+          <div id="bookmarks-container"></div>
+        </calcite-panel>
+        <calcite-panel heading="Print" height-scale="l" data-panel-id="print" hidden>
+          <div id="print-container"></div>
+        </calcite-panel>
+        <!-- Info panel (populates with info from the web map) -->
+        <calcite-panel heading="Details" data-panel-id="information" hidden>
+          <div id="info-content">
+            <img id="item-thumbnail" alt="webmap thumbnail" />
+            <div id="item-description">
+              <!-- Dynamically populated -->
+            </div>
+            <calcite-label layout="inline">
+              <b>Rating:</b>
+              <calcite-rating id="item-rating" read-only>
+                <!-- Dynamically populated -->
+              </calcite-rating>
+            </calcite-label>
+          </div>
+        </calcite-panel>
+      </calcite-shell-panel>
+      <div id="viewDiv"></div>
+    </calcite-shell>
+  </body>
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/widgets/Bookmarks",
+      "esri/widgets/BasemapGallery",
+      "esri/widgets/LayerList",
+      "esri/widgets/Legend",
+      "esri/widgets/Print"
+    ], function(WebMap, MapView, Bookmarks, BasemapGallery, LayerList, Legend, Print) {
+      const webmapId = new URLSearchParams(window.location.search).get("webmap")
+        ?? "cc3bd744b9a44feaa493dd867a1d48dd";
+
+      const map = new WebMap({
+        portalItem: {
+          id: webmapId
+        }
+      });
+
+      const view = new MapView({
+        map,
+        container: "viewDiv",
+        padding: {
+          left: 45
+        }
+      });
+
+      view.ui.move("zoom", "top-left");
+
+      const basemaps = new BasemapGallery({
+        view,
+        container: "basemaps-container"
+      });
+
+      const bookmarks = new Bookmarks({
+        view,
+        container: "bookmarks-container"
+      });
+
+      const layerList = new LayerList({
+        view,
+        selectionEnabled: true,
+        container: "layers-container"
+      });
+
+      const legend = new Legend({
+        view,
+        container: "legend-container"
+      });
+
+      const print = new Print({
+        view,
+        container: "print-container"
+      });
+
+      map.when(() => {
+        const { title, description, thumbnailUrl, avgRating } = map.portalItem;
+        document.querySelector("#header-title").textContent = title;
+        document.querySelector("#item-description").innerHTML = description;
+        document.querySelector("#item-thumbnail").src = thumbnailUrl;
+        document.querySelector("#item-rating").value = avgRating;
+
+        let activeWidget;
+
+        const handleActionBarClick = ({ target }) => {
+          if (target.tagName !== "CALCITE-ACTION") {
+            return;
+          }
+
+          if (activeWidget) {
+            document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
+            document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
+          }
+
+          const nextWidget = target.dataset.actionId;
+          if (nextWidget !== activeWidget) {
+            document.querySelector(`[data-action-id=${nextWidget}]`).active = true;
+            document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
+            activeWidget = nextWidget;
+          } else {
+            activeWidget = null;
+          }
+        };
+
+        document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
+
+        let actionBarExpanded = false;
+
+        document.addEventListener("calciteActionBarToggle", event => {
+          actionBarExpanded = !actionBarExpanded;
+          view.padding = {
+            left: actionBarExpanded ? 135 : 45
+          };
+        });
+
+        document.querySelector("calcite-shell").hidden = false;
+        document.querySelector("calcite-loader").active = false;
+
+        const toggleThemes = () => {
+          // Calcite theme
+          document.body.classList.toggle("calcite-theme-dark");
+          // ArcGIS JSAPI theme
+          const dark = document.querySelector("#jsapi-theme-dark");
+          const light = document.querySelector("#jsapi-theme-light");
+          dark.disabled = !dark.disabled;
+          light.disabled = !light.disabled;
+          // ArcGIS JSAPI basemap
+          map.basemap = dark.disabled ? "gray-vector" : "dark-gray-vector";
+        };
+
+        document.querySelector("calcite-switch").addEventListener("calciteSwitchChange", toggleThemes);
+
+      });
+    });
+  </script>
+</html>
