@@ -1,5 +1,3 @@
-//Main.js
-
 require([
   "esri/config",
   "esri/Map",
