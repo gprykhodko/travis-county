@@ -1,0 +1,145 @@
+
+body,
+.view-container,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+}
+
+calcite-loader {
+  align-self: center;
+  justify-self: center;
+}
+
+.toolbar {
+  position: absolute;
+  top: 15px;
+  right: 31px;
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.toolbar button {
+  border-color: var(--calcite-ui-border-1);
+  border-width: 1.4px;
+  font-size: 20px;
+}
+
+.esri-widget--button.active,
+.esri-widget--button.active:hover,
+.esri-widget--button.active:focus {
+  cursor: default;
+  background-color: #999696;
+}
+.esri-widget--button.active path,
+.esri-widget--button.active:hover path,
+.esri-widget--button.active:focus path {
+  fill: #E4E4E4;
+}
+
+#halffLogoDiv {
+  padding-left: 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color:rgba(25, 25, 25, 0.788);
+  position: absolute;
+  right: 8px;
+  bottom: 10px;
+ /*  text-align: inherit; */
+  /* width: 100px; */
+}
+
+#halffLogoDiv span {
+  color: rgba(255, 255, 255, 0.527);
+}
+
+div h2 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 2.5em;
+  color: var(--calcite-ui-text-1);
+  font-family: Arial, sans-serif;
+}
+
+.countyLogo {
+  align-self: center;
+}
+
+#info-content {
+  padding: 0.75rem;
+}
+
+
+#header {
+  display: flex;
+  padding: 0 1rem;
+  background-color: var(--calcite-ui-foreground-1);
+}
+
+#header-controls {
+  display: flex;
+  margin-inline-start: auto;
+  align-self: center;
+}
+
+.label-wrapper {
+  display: flex;
+  margin-inline: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--calcite-ui-border-1);
+  cursor: pointer;
+}
+
+:root {
+  --calcite-label-margin-bottom: 0px;
+}
+
+calcite-switch {
+  margin: 0 0.5rem;
+}
+
+.esri-view .esri-view-surface--inset-outline:focus::after {
+  outline: none;
+}
+
+.esri-icon-non-visible::before {
+  content: "\e610";
+}
+  
+.esri-icon-visible::before {
+  content: "\e611";
+}
+
+/* .esri-input.esri-search__input::placeholder {
+  color:whitesmoke;
+}
+ */
+.esri-search__container {
+  outline: 1px solid #949494;
+
+}
+
+.esri-layer-list__item-title {
+  font-size: 14px;
+}
+
+.esri-legend__layer-caption {
+  display: none;
+}
+
+/* .esri-search .esri-widget--button {
+  color: whitesmoke;
+} 
+ */
