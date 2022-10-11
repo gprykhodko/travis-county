@@ -22,16 +22,21 @@ require([
     "esri/layers/WMSLayer",
     "esri/WebMap",
     "esri/widgets/ScaleBar",
-    "esri/widgets/Measurement"
+    "esri/widgets/Measurement",
+    "esri/layers/support/TileInfo"
 ], (esriConfig, Map, MapView, Legend, Graphic, print, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
     LayerList, Slider, Basemap, BasemapGallery, BasemapToggle, Home, Search, identify, IdentifyParameters, GroupLayer, WMSLayer, 
-    WebMap, ScaleBar, Measurement) => {
+    WebMap, ScaleBar, Measurement, TileInfo) => {
 
 //NearMap basemap
-const nearmap = new Basemap({
+  const nearmap = new Basemap({
     baseLayers: [
       new WMSLayer({
         url: "https://api.nearmap.com/wms/v1/latest/apikey/ZmY1MDZkYmYtYzViMy00MzA0LTkzMzQtN2MzMGQzZjcyYTk2",
+        maxScale: 282.124294,
+        spatialReference: {
+          wkid: 3857
+        },
         sublayers: [{
           name: "United States of America latest"
         }]
@@ -1358,6 +1363,7 @@ const nearmap = new Basemap({
     zoom: 11,
     center: [-97.73556, 30.28820], //center on travis county
     constraints: {
+      lods: TileInfo.create().lods,
       rotationEnabled: false,
       minZoom: 10,
       maxZoom: 20
@@ -1369,13 +1375,16 @@ const nearmap = new Basemap({
       components: ["zoom"]
     }
   });
-
+  
   view.ui.move("zoom", "top-left");
 
   const basemaps = new BasemapGallery({
     view: view,
     container: "basemaps-container"
   });
+  basemaps.source.basemaps.items.push(nearmap);
+
+  console.log(basemaps.source.basemaps.items)
 
   const searchWidget = new Search({
     view: view,
@@ -1413,11 +1422,13 @@ const nearmap = new Basemap({
     const type = view.type;
     measurement.activeTool =
       type.toUpperCase() === "2D" ? "distance" : "direct-line";
+    measurement.linearUnit = "feet";
     distanceButton.classList.add("active");
     areaButton.classList.remove("active");
   }
   function areaMeasurement() {
       measurement.activeTool = "area";
+      measurement.areaUnit = "acres"
       distanceButton.classList.remove("active");
       areaButton.classList.add("active");
   }
@@ -1550,7 +1561,7 @@ const nearmap = new Basemap({
   
       // Shows the results of the identify in a popup once the promise is resolved
       function showPopup(response) {
-        console.log(response);
+        //console.log(response);
         visibleGrids = [];
         response.forEach(item => {
           if (item.attributes["Pixel Value"] !== "NoData" && item.visible == true && item.popupTemplate != null) {
@@ -1567,7 +1578,7 @@ const nearmap = new Basemap({
   }
 
   view.when(() => {
-
+    //console.log(map.get("basemap.title"))
     const layerList = new LayerList({
       view: view,
       selectionEnabled: true,
