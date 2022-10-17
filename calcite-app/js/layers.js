@@ -1,42 +1,8 @@
-require([
-    "esri/config",
-    "esri/Map",
-    "esri/views/MapView",
-    "esri/widgets/Legend",
-    "esri/Graphic",
-    "esri/rest/print",
-    "esri/rest/support/PrintTemplate",
-    "esri/rest/support/PrintParameters",
-    "esri/layers/FeatureLayer",
-    "esri/layers/MapImageLayer",
-    "esri/widgets/LayerList",
-    "esri/widgets/Slider",
-    "esri/Basemap",
-    "esri/widgets/BasemapGallery",
-    "esri/widgets/BasemapToggle",
-    "esri/widgets/Home",
-    "esri/widgets/Search",
-    "esri/rest/identify",
-    "esri/rest/support/IdentifyParameters",
-    "esri/layers/GroupLayer",
-    "esri/layers/WMSLayer",
-    "esri/WebMap",
-    "esri/widgets/ScaleBar",
-    "esri/widgets/Measurement",
-    "esri/layers/support/TileInfo",
-], (esriConfig, Map, MapView, Legend, Graphic, print, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
-    LayerList, Slider, Basemap, BasemapGallery, BasemapToggle, Home, Search, identify, IdentifyParameters, GroupLayer, WMSLayer, 
-    WebMap, ScaleBar, Measurement, TileInfo,) => {
-
-//NearMap basemap
-  const nearmap = new Basemap({
+ //NearMap basemap
+ const nearmap = new Basemap({
     baseLayers: [
       new WMSLayer({
         url: "https://api.nearmap.com/wms/v1/latest/apikey/ZmY1MDZkYmYtYzViMy00MzA0LTkzMzQtN2MzMGQzZjcyYTk2",
-        maxScale: 282.124294,
-        spatialReference: {
-          wkid: 3857
-        },
         sublayers: [{
           name: "United States of America latest"
         }]
@@ -46,6 +12,7 @@ require([
     id: "nearmap",
     thumbnailUrl: "https://www.nearmap.com/etc.clientlibs/nearmap/clientlibs/site/resources/images/favicon.png"
   });
+
   //Municipal Jurisdictions
   const jurisdictions = new GroupLayer({
     title: "Municipal Jurisdictions",
@@ -95,11 +62,13 @@ require([
     ]
     
   });
+
   //County Boundaries
   const countyBoundary = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Boundary/MapServer/",
     listMode: "hide"
   });
+
   //Travis Counties Facilities Feature Service
   const facilities = new FeatureLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Services_and_Facilities/Travis_County_Facilities/MapServer/0",
@@ -119,6 +88,7 @@ require([
       ]
     }
   });
+
   //ESRI Roads
   const roads = new FeatureLayer({
     url: "https://services.arcgis.com/0L95CJ0VTaxqcmED/ArcGIS/rest/services/TRANSPORTATION_street_segment/FeatureServer",
@@ -126,6 +96,7 @@ require([
     opacity: 1,
     title: "Roads"
   });
+
   //Travis County Road Projects
   const roadProjects = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Public_Works/Travis_County_Roads/MapServer",
@@ -140,6 +111,7 @@ require([
     ]
 
   });
+
   //TxDOT Annual Avg Daily
   const txdot = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Public_Works/TxDOT_24HR_Annual_Avg_Daily_Traffic_AADT/MapServer",
@@ -153,6 +125,7 @@ require([
     ]
 
   });
+
   //National Weather Service Rainfall data
   const nws = new MapImageLayer({
     url: "https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer",
@@ -162,6 +135,7 @@ require([
     visible: false
 
   });
+
   //Administrative Boundaries
   const adminBoundaries = new GroupLayer({
     title: "Administrative Boundaries",
@@ -229,6 +203,7 @@ require([
     ]
     
   });
+  
   //Travis County Subdivisions
   const subdivs = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/Travis_County_Subdivisions/MapServer",
@@ -243,6 +218,7 @@ require([
     ]
 
   });
+
   //Parcel boundary
   const parcels = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/TCAD_public/MapServer/",
@@ -258,6 +234,7 @@ require([
     ]
 
   });
+
   //Planning
   const planning = new GroupLayer({
     title: "Planning",
@@ -619,6 +596,7 @@ require([
       })
     ]
   });
+
   //School Districts
   const schoolDistricts = new MapImageLayer({
       url: "https://gis.traviscountytx.gov/server1/rest/services/Boundaries_and_Jurisdictions/School_Districts/MapServer",
@@ -635,6 +613,7 @@ require([
       ]
   
     });
+
   //Capital Improvement Projects
   const cip = new GroupLayer({
     title: "Capital Improvement Projects",
@@ -718,6 +697,7 @@ require([
       }),
     ]
   });
+
   //Hydrology
   const hydrology = new GroupLayer({
     title: "Hydrology",
@@ -828,6 +808,7 @@ require([
       })
     ]
   });
+
   //Cemeteries
   const cemeteries = new GroupLayer({
     title: "Cemeteries",
@@ -883,6 +864,7 @@ require([
       })
     ]
   });
+
   //Storm Water Management
   const stormWater = new GroupLayer({
     title: "Storm Water Management",
@@ -1054,6 +1036,7 @@ require([
       })
     ]
   });
+
   //Parks
   const parks = new GroupLayer({
     title: "Travis County Parks",
@@ -1105,6 +1088,7 @@ require([
     ]
     
   });
+
   //Balcones Canyonlands Preserve
   const bcp = new MapImageLayer({
     url: "https://gis.traviscountytx.gov/server1/rest/services/BCP_BCCP/BalconesCanyonlandsPreserve/MapServer",
@@ -1119,6 +1103,7 @@ require([
     ]
 
   });
+
   // Endangered Species Habitat
   const habitat = new GroupLayer({
     title: "Endangered Species Habitat",
@@ -1161,6 +1146,7 @@ require([
       })
     ]
   });
+
   //Recycling 
   const recycling = new GroupLayer({
     title: "Recycling",
@@ -1191,6 +1177,7 @@ require([
       })
     ]
   });
+
   //Flood Hazard Layer
   const nfhl = new GroupLayer({
     title: "NFHL",
@@ -1255,7 +1242,7 @@ require([
     opacity: 0.5,
     listMode: "hide-children",
     title: "Flood Depth (1%) in feet",
-    visible: false,
+    visible: true,
     sublayers: [
       {
         id: 12
@@ -1263,6 +1250,7 @@ require([
     ]
 
   });
+
   //.2 Percent Depth Image
   const depth02 = new MapImageLayer({
      url: "https://txgeo.usgs.gov/arcgis/rest/services/FEMA_EBFE/EBFE/MapServer",
@@ -1277,6 +1265,7 @@ require([
      ]
 
   });
+
   //10 Percent Estimated Flood Extent 
   const extent10 = new MapImageLayer({
     url: "https://txgeo.usgs.gov/arcgis/rest/services/FEMA_EBFE/EBFE/MapServer",
@@ -1317,6 +1306,7 @@ require([
      ]
 
   });
+
   //.2 Percent WSEL Image
   const wsel02 = new MapImageLayer({
      url: "https://txgeo.usgs.gov/arcgis/rest/services/FEMA_EBFE/EBFE/MapServer",
@@ -1329,393 +1319,23 @@ require([
          id: 24
        }
      ]
+
   });
-  //Maha flood extent
-  const mahaFloodExtent = new MapImageLayer({
-    url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
-    opacity: 0.5,
-    listMode: "hide-children",
-    title: "Maha Creek Flood Extent(1% and 0.2%)",
-    visible: true,
-    sublayers: [
-      {
-        id: 0
-      }
-    ]
-  });
-  //Maha 1 Percent Depth Image
-  const mahaDepth1 = new MapImageLayer({
-    url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
-    opacity: 0.5,
-    listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
-    visible: false,
-    sublayers: [
-      {
-        id: 1
-      }
-    ]
-  });
-  //Maha .2 Percent Depth Image
-  const mahaDepth02 = new MapImageLayer({
-    url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
-    opacity: 0.5,
-    listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
-    visible: false,
-    sublayers: [
-      {
-        id: 2
-      }
-    ]
-  });
-  //Maha 1 Percent Depth Image
-  const mahaWSE1 = new MapImageLayer({
-      url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
-      opacity: 0.5,
-      listMode: "hide-children",
-      title: "Maha Creek Flood Depth(1%)",
-      visible: false,
-      sublayers: [
-        {
-          id: 3
-        }
-      ]
-  });
-  //Maha .2 Percent WSE Image
-  const mahaWSE02 = new MapImageLayer({
-    url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
-    opacity: 0.5,
-    listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
-    visible: false,
-    sublayers: [
-      {
-        id: 3
-      }
-    ]
-});
-  //Maha layers group
-  const mahaLayers = new GroupLayer({
-    title: "Maha Creek Flood Study",
-    layers: [mahaWSE02, mahaWSE1, mahaDepth02, mahaDepth1, mahaFloodExtent],
-    visible: true,
-  });
+
   //Travis County layers group
-/*   const referenceLayers = new GroupLayer({
+  const referenceLayers = new GroupLayer({
     title: "Travis County Layers",
-    listMode: "show", 
     layers: [
       countyBoundary, subdivs, schoolDistricts, jurisdictions, adminBoundaries, nfhl, planning, cemeteries, hydrology, 
       parcels, habitat, bcp, parks, roads, cip, roadProjects, txdot, stormWater, 
       recycling, facilities
     ],
     visible: true,
-  }); */
-  //BLE data group
-  const bleLayers = new GroupLayer({
+  });
+
+  //Flood Risk data group
+  const floodRiskLayers = new GroupLayer({
     title: "Base Level Engineering",
     layers: [wsel02, wsel1, depth02, depth1, extent1_02, extent10],
     visible: true,
   });
-    
-  const map = new WebMap({
-    basemap: "satellite",
-    layers: [countyBoundary, subdivs, schoolDistricts, jurisdictions, adminBoundaries, planning, cemeteries, hydrology, 
-             parcels, habitat, bcp, parks, roads, cip, roadProjects, txdot, stormWater, 
-             recycling, facilities, nfhl, bleLayers, mahaLayers]
-  });
-
-  const view = new MapView({
-    container: "viewDiv",
-    map: map,
-    zoom: 11,
-    center: [-97.73556, 30.28820], //center on travis county
-    constraints: {
-      lods: TileInfo.create().lods,
-      snapToZoom: false,
-      rotationEnabled: false,
-      minZoom: 10,
-      maxZoom: 20
-    },
-    popup: {
-      defaultPopupTemplateEnabled: false
-    },
-    ui: {
-      components: ["zoom"]
-    }
-  });
-  
-  view.ui.move("zoom", "top-left");
-
-  const basemaps = new BasemapGallery({
-    view: view,
-    container: "basemaps-container"
-  });
-  basemaps.source.basemaps.items.push(nearmap);
-
-  const searchWidget = new Search({
-    view: view,
-    container: "search"
-  });
-
-  const homeWidget = new Home({
-    view: view
-  });
-
-  const scaleBar = new ScaleBar({
-    view: view,
-    style: "line",
-    unit: "dual",
-  });
-
-  //Measure widgets
-  const measurement = new Measurement({
-    view: view
-  });
-  // Set-up event handlers for buttons and click events for the measure widget
-  const distanceButton = document.getElementById("distance");
-  const areaButton = document.getElementById("area");
-  const clearButton = document.getElementById("clear");
-  distanceButton.addEventListener("click", () => {
-    distanceMeasurement();
-  });
-  areaButton.addEventListener("click", () => {
-    areaMeasurement();
-  });
-  clearButton.addEventListener("click", () => {
-    clearMeasurements();
-  });
-  function distanceMeasurement() {
-    const type = view.type;
-    measurement.activeTool =
-      type.toUpperCase() === "2D" ? "distance" : "direct-line";
-    measurement.linearUnit = "feet";
-    distanceButton.classList.add("active");
-    areaButton.classList.remove("active");
-  }
-  function areaMeasurement() {
-      measurement.activeTool = "area";
-      measurement.areaUnit = "acres"
-      distanceButton.classList.remove("active");
-      areaButton.classList.add("active");
-  }
-  function clearMeasurements() {
-      distanceButton.classList.remove("active");
-      areaButton.classList.remove("active");
-      measurement.clear();
-  }
-
-  view.ui.add([
-    {
-      component: homeWidget,
-      position: "top-left",
-      index: 0
-    }, {
-      component: scaleBar,
-      position: "bottom-left"
-    }, {
-      component: measurement,
-      position: "top-left"
-    }
-  ]);
-
-  //Function for adding legend and opacity slider to the layer list
-  function defineActions(event) {
-      const item = event.item;
-      if (item.layer.type != null && item.layer.type != "group" && item.children.length == 0) {
-        const slider = new Slider({
-          min: 0,
-          max: 1,
-          precision: 2,
-          values: [item.layer.opacity],
-          visibleElements: {
-            labels: true,
-            rangeLabels: true
-          }
-        });
-  
-        item.panel = {
-          content: [slider, "legend"],
-          className: "esri-icon-legend",
-          title: "Legend",
-        };
-  
-        slider.on("thumb-drag", event => {
-          const {value} = event;
-          item.layer.opacity = value;
-        }); 
-      } 
-  }
-
-  //Identify grids depth and elevations and show them in a pop up
-  let params;
-  view.when(() => {
-      // executeIdentify() is called each time the view is clicked
-      view.on("click", executeIdentify);
-      
-      // Set the parameters for the identify
-      params = new IdentifyParameters({
-        geometry: {type: "point"},
-        tolerance: 0,
-        returnGeometry: true,
-        layerOption: "visible",
-        width: view.width,
-        height: view.height,
-      });
-  });
-  
-  function executeIdentify(event) {
-      if (event.button === 0) {
-      //return visible grid layers ids
-      grids = [depth1, depth02, wsel1, wsel02];
-      visibleIds = [];
-      grids.forEach(grid => {
-        if (grid.visible == true) {
-          visibleIds.push(grid.allSublayers.items[0].id);
-        }
-      });
-      // Set the geometry to the location of the view click
-      params.layerIds = visibleIds;
-      params.geometry = event.mapPoint;
-      params.mapExtent = view.extent;
-      document.getElementById("viewDiv").style.cursor = "wait";
-  
-      // This function returns a promise that resolves to an array of features
-      // A custom popupTemplate is set for each feature based on the layer it
-      // originates from
-      identify
-        .identify(depth1.url, params)
-        .then(response => {
-          const results = response.results;
-  
-          return results.map(result => {
-            const feature = result.feature;
-            const layerName = result.layerName;
-            //console.log("feature - ", feature)
-            feature.attributes.layerName = layerName;
-            
-            if (layerName === "1 Percent Depth Image") {
-              feature.popupTemplate = {
-                // autocasts as new PopupTemplate()
-                title: "Flood Depth (1%)",
-                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
-              };
-            } else if (layerName === ".2 Percent Depth Image") {
-              feature.popupTemplate = {
-                // autocasts as new PopupTemplate()
-                title: "Flood Depth (0.2%)",
-                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
-              };
-            } else if (layerName === "1 Percent WSEL Image") {
-                feature.popupTemplate = {
-                  // autocasts as new PopupTemplate()
-                  title: "WSEL (1%)",
-                  content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
-                };
-            }  else if (layerName === ".2 Percent WSEL Image") {
-                feature.popupTemplate = {
-                  // autocasts as new PopupTemplate()
-                  title: "WSEL (0.2%)",
-                  content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
-                };
-              } 
-            return feature; 
-            
-          });
-          
-        })
-        .then(showPopup); // Send the array of features to showPopup()
-  
-      // Shows the results of the identify in a popup once the promise is resolved
-      function showPopup(response) {
-        //console.log(response);
-        visibleGrids = [];
-        response.forEach(item => {
-          if (item.attributes["Pixel Value"] !== "NoData" && item.visible && item.popupTemplate != null && floodRiskLayers.visible) {
-            visibleGrids.push(item);
-            view.popup.open({
-              features: visibleGrids,
-              location: event.mapPoint
-            });
-          }
-        }); 
-        document.getElementById("viewDiv").style.cursor = "auto";
-      }
-    }
-  }
-
-  view.when(() => {
-    const layerList = new LayerList({
-      view: view,
-      selectionEnabled: true,
-      listItemCreatedFunction: defineActions,
-      container: "layers-container"
-    });
-
-    let activeWidget = "layers";
-    const handleActionBarClick = ( {target} ) => {
-      if (target.tagName !== "CALCITE-ACTION") {
-        return;
-      }
-      if (activeWidget) {
-        document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
-        document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
-      }
-      let nextWidget = target.dataset.actionId;
-      
-      if (nextWidget !== activeWidget) {
-        document.querySelector(`[data-action-id=${nextWidget}]`).active = true;
-        document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
-        activeWidget = nextWidget;
-      } 
-      if (activeWidget == nextWidget) {
-        document.querySelector(`[data-action-id=${nextWidget}]`).active = true;
-        document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
-      } 
-      else {
-        activeWidget = null;
-      }
-    };
-
-    document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
-
-    let actionBarExpanded = false;
-
-    document.addEventListener("calciteActionBarToggle", () => {
-      actionBarExpanded = !actionBarExpanded;
-      view.padding = {
-        left: actionBarExpanded ? 5 : 5
-      };
-    });
-
-    document.querySelector("calcite-shell").hidden = false;
-    document.querySelector("calcite-loader").active = false;
-
-    let darkLogo = new Image(50, 50);
-    let whiteLogo = new Image(50, 50);
-    darkLogo = "./images/travis_county_seal-black.png";
-    whiteLogo = "./images/white county seal transparent background.png";
-    const countyLogo = document.getElementById("countyLogo");
-    let toggle = true;
-    const toggleThemes = () => {
-      //Logo toggle
-      toggle = !toggle;
-      countyLogo.src = toggle ? whiteLogo : darkLogo;
-      // Calcite theme
-      document.body.classList.toggle("calcite-theme-light");
-      // ArcGIS JSAPI theme
-      const light = document.querySelector("#jsapi-theme-light");
-      const dark = document.querySelector("#jsapi-theme-dark");
-      light.disabled = !light.disabled;
-      dark.disabled = !dark.disabled;
-    };
-    document.querySelector("calcite-switch").addEventListener("calciteSwitchChange", toggleThemes);
-  });
-  //Set-up event handlers for modal information screen
-  const appDetailsModal = document.getElementById('app-details-modal');
-  const appDetailsAction = document.getElementById('app-details-action');
-    appDetailsAction.addEventListener('click', () => {
-      appDetailsModal.open = (!appDetailsModal.open);
-    }); 
-});
