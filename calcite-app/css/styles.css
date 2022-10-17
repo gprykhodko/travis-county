@@ -17,6 +17,10 @@ calcite-loader {
   justify-self: center;
 }
 
+.info-modal {
+  margin: -15px;
+}
+
 .toolbar {
   position: absolute;
   top: 15px;
@@ -107,7 +111,7 @@ div h2 {
 }
 
 calcite-switch {
-  margin: 0 0.5rem;
+  margin: 1 0.5rem;
 }
 
 .esri-view .esri-view-surface--inset-outline:focus::after {

@@ -23,20 +23,23 @@
         <h2 id="header-title">
           Travis County Viewer
         </h2>
-
         <!-- Controls -->
         <div id="header-controls">
-          <calcite-label id="search">
-
-          </calcite-label>
+          <!-- Search Widget -->
+          <calcite-label id="search"></calcite-label>
           <!-- Dark Mode Switch -->
           <calcite-label layout="inline" class="label-wrapper" title="Switch theme">
             <calcite-icon icon="moon" scale="s" class="switch-icon"></calcite-icon>
             <calcite-switch></calcite-switch>
             <calcite-icon icon="brightness" scale="s" class="switch-icon"></calcite-icon>
           </calcite-label>
+          <!-- Information Modal -->
+          <calcite-label class="content-row" expand-disabled="true">
+            <calcite-action class="info-modal" id="app-details-action" appearance="solid" scale="l" title="app details..." text="app details" icon="information"></calcite-action>
+          </calcite-label>
         </div>
       </div>
+      <!-- Left Panel -->
       <calcite-shell-panel class="shell" slot="panel-start">
         <calcite-action-bar slot="action-bar" scale="m">
           <calcite-action data-action-id="layers" icon="layers" text="Layers" scale="l" title="Layers"></calcite-action>
@@ -52,7 +55,7 @@
           <div id="layers-container"></div>
         </calcite-panel>
 
-        <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
+        <calcite-panel heading="Basemaps" data-panel-id="basemaps" hidden>
           <div id="basemaps-container"></div>
         </calcite-panel>
 
@@ -77,6 +80,7 @@
           </div>
         </calcite-panel>
       </calcite-shell-panel>
+      <!-- View div -->
       <div class="view-container">
         <div id="viewDiv"></div>
         <div id="toolbar" class="esri-component esri-widget toolbar">
@@ -101,9 +105,18 @@
           <img src="./images/Halff_RGB.png" width="82" height="18">
         </div>
       </div>
-      
-      
     </calcite-shell>
+    <calcite-modal open id="app-details-modal" color="white" background-color="grey" scale="m" width="m" role="dialog" aria-labelledby="app-modal-title">
+      <h3 slot="header" id="app-modal-title" class="application-title">Travis County Viewer</h3>
+      <div slot="content" class="application-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eveniet cupiditate consectetur suscipit officiis quam, eligendi dicta, harum repellat quas qui esse, aliquam dignissimos inventore vitae modi ipsa nihil! Illum non distinctio dolorem eius maiores itaque nobis, quam aliquam est ab numquam, sit adipisci. Iste ipsum nam vero eius suscipit consequatur doloribus facilis repellendus? Consequatur mollitia laudantium repellendus! Cupiditate cum modi corrupti at quis possimus similique eveniet odio veniam deleniti, provident vitae et magni dignissimos quaerat tempora. Architecto, quia, suscipit nulla minus veniam debitis, facere consequatur magnam aliquam ipsum recusandae nisi libero provident similique? Labore placeat libero repudiandae ut tempore!</div>
+      <div slot="secondary" class="margin-m">
+        <calcite-label layout="inline">
+          <span>Don't show next time</span>
+          <calcite-checkbox id="hide-startup-checkbox"></calcite-checkbox>
+        </calcite-label>
+      </div>
+      <calcite-button id="app-details-ok-btn" slot="primary" width="full" hidden>OK</calcite-button>
+    </calcite-modal>
   </body>
 
 </html>
