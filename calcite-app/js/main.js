@@ -1361,7 +1361,7 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
+    title: "Maha Creek Flood Depth(0.2%)",
     visible: false,
     sublayers: [
       {
@@ -1374,7 +1374,7 @@ require([
       url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
       opacity: 0.5,
       listMode: "hide-children",
-      title: "Maha Creek Flood Depth(1%)",
+      title: "Maha Creek WSEL(1%)",
       visible: false,
       sublayers: [
         {
@@ -1387,7 +1387,7 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
+    title: "Maha Creek WSEL(0.2%)",
     visible: false,
     sublayers: [
       {
