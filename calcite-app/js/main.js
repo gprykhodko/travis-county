@@ -1632,7 +1632,7 @@ require([
         //console.log(response);
         visibleGrids = [];
         response.forEach(item => {
-          if (item.attributes["Pixel Value"] !== "NoData" && item.visible && item.popupTemplate != null && floodRiskLayers.visible) {
+          if (item.attributes["Pixel Value"] !== "NoData" && item.visible && item.popupTemplate != null && bleLayers.visible) {
             visibleGrids.push(item);
             view.popup.open({
               features: visibleGrids,
