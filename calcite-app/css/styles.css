@@ -143,6 +143,12 @@ calcite-switch {
   display: none;
 }
 
+.esri-popup__action-image {
+  position: relative;
+  bottom: 2px;
+  right: 2px;
+}
+
 /* .esri-search .esri-widget--button {
   color: whitesmoke;
 } 

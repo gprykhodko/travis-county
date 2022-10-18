@@ -4,7 +4,7 @@ require([
     "esri/views/MapView",
     "esri/widgets/Legend",
     "esri/Graphic",
-    "esri/rest/print",
+    //"esri/rest/print",
     "esri/rest/support/PrintTemplate",
     "esri/rest/support/PrintParameters",
     "esri/layers/FeatureLayer",
@@ -24,9 +24,11 @@ require([
     "esri/widgets/ScaleBar",
     "esri/widgets/Measurement",
     "esri/layers/support/TileInfo",
-], (esriConfig, Map, MapView, Legend, Graphic, print, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
+    "esri/widgets/Print",
+    "esri/widgets/Bookmarks"
+], (esriConfig, Map, MapView, Legend, Graphic, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
     LayerList, Slider, Basemap, BasemapGallery, BasemapToggle, Home, Search, identify, IdentifyParameters, GroupLayer, WMSLayer, 
-    WebMap, ScaleBar, Measurement, TileInfo,) => {
+    WebMap, ScaleBar, Measurement, TileInfo, PrintWidget, Bookmarks) => {
 
 //NearMap basemap
   const nearmap = new Basemap({
@@ -1286,7 +1288,11 @@ require([
     visible: false,
     sublayers: [
       {
-        id: 7
+        id: 7,
+        popupTemplate: {
+          title: "Base Level Engineering (BLE) study",
+          content: "10% Flood Zone"
+        }
       }
     ]
   });
@@ -1299,7 +1305,11 @@ require([
   visible: false,
   sublayers: [
     {
-      id: 8
+      id: 8,
+      popupTemplate: {
+        title: "Base Level Engineering (BLE) study",
+        content: "Flood Zone {FLD_ZONE}"
+      }
     }
   ]
   });
@@ -1335,11 +1345,15 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek Flood Extent(1% and 0.2%)",
+    title: "Maha Creek Flood Extent (1% and 0.2%)",
     visible: true,
     sublayers: [
       {
-        id: 0
+        id: 0,
+        /* popupTemplate: {
+          title: "Maha Creek Flood Study",
+          content: "Flood Zone {FLD_ZONE}"
+        } */
       }
     ]
   });
@@ -1348,7 +1362,7 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek Flood Depth(1%)",
+    title: "Maha Creek Flood Depth (1%)",
     visible: false,
     sublayers: [
       {
@@ -1361,7 +1375,7 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek Flood Depth(0.2%)",
+    title: "Maha Creek Flood Depth (0.2%)",
     visible: false,
     sublayers: [
       {
@@ -1374,7 +1388,7 @@ require([
       url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
       opacity: 0.5,
       listMode: "hide-children",
-      title: "Maha Creek WSEL(1%)",
+      title: "Maha Creek WSEL (1%)",
       visible: false,
       sublayers: [
         {
@@ -1387,18 +1401,18 @@ require([
     url: "https://devgisweb.halff.com/agsdev/rest/services/TravisCountyFloodViewer/Maha_Floodplains/MapServer",
     opacity: 0.5,
     listMode: "hide-children",
-    title: "Maha Creek WSEL(0.2%)",
+    title: "Maha Creek WSEL (0.2%)",
     visible: false,
     sublayers: [
       {
-        id: 3
+        id: 4
       }
     ]
 });
   //Maha layers group
   const mahaLayers = new GroupLayer({
     title: "Maha Creek Flood Study",
-    layers: [mahaWSE02, mahaWSE1, mahaDepth02, mahaDepth1, mahaFloodExtent],
+    layers: [mahaDepth02, mahaDepth1, mahaFloodExtent],
     visible: true,
   });
   //Travis County layers group
@@ -1415,7 +1429,7 @@ require([
   //BLE data group
   const bleLayers = new GroupLayer({
     title: "Base Level Engineering",
-    layers: [wsel02, wsel1, depth02, depth1, extent1_02, extent10],
+    layers: [depth02, depth1, extent1_02, extent10],
     visible: true,
   });
     
@@ -1469,6 +1483,30 @@ require([
     unit: "dual",
   });
 
+  const legend = new Legend({
+    view,
+    container: "legend-container"
+  });
+
+  const print = new PrintWidget({
+    view,
+    container: "print-container"
+  });
+
+  const bookmarks = new Bookmarks({
+    view: view,
+    container: "bookmarks-container",
+    // allows bookmarks to be added, edited, or deleted
+    editingEnabled: true,
+  });
+
+  //Generate Report Action
+  const generateReport = {
+    title: "Generate Report",
+    id: "generate-report",
+    image: "http://static.arcgis.com/images/Symbols/PeoplePlaces/Information.png",
+    //className: "esri-icon-documentation"
+  };
   //Measure widgets
   const measurement = new Measurement({
     view: view
@@ -1565,7 +1603,7 @@ require([
       });
   });
   
-  function executeIdentify(event) {
+/*   function executeIdentify(event) {
       if (event.button === 0) {
       //return visible grid layers ids
       grids = [depth1, depth02, wsel1, wsel02];
@@ -1588,38 +1626,37 @@ require([
         .identify(depth1.url, params)
         .then(response => {
           const results = response.results;
-  
           return results.map(result => {
             const feature = result.feature;
             const layerName = result.layerName;
-            //console.log("feature - ", feature)
+            //console.log(feature);
             feature.attributes.layerName = layerName;
-            
             if (layerName === "1 Percent Depth Image") {
               feature.popupTemplate = {
                 // autocasts as new PopupTemplate()
                 title: "Flood Depth (1%)",
-                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
+                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet'
               };
             } else if (layerName === ".2 Percent Depth Image") {
-              feature.popupTemplate = {
+                feature.popupTemplate = {
                 // autocasts as new PopupTemplate()
-                title: "Flood Depth (0.2%)",
-                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
-              };
+                  title: "Flood Depth (0.2%)",
+                  content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
+                };
             } else if (layerName === "1 Percent WSEL Image") {
                 feature.popupTemplate = {
                   // autocasts as new PopupTemplate()
                   title: "WSEL (1%)",
                   content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
                 };
-            }  else if (layerName === ".2 Percent WSEL Image") {
+            } else if (layerName === ".2 Percent WSEL Image") {
                 feature.popupTemplate = {
                   // autocasts as new PopupTemplate()
                   title: "WSEL (0.2%)",
                   content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
                 };
               } 
+              //console.log(feature.popupTemplate.title);
             return feature; 
             
           });
@@ -1632,7 +1669,9 @@ require([
         //console.log(response);
         visibleGrids = [];
         response.forEach(item => {
-          if (item.attributes["Pixel Value"] !== "NoData" && item.visible && item.popupTemplate != null && bleLayers.visible) {
+          if (item.attributes["Pixel Value"] !== "NoData" && 
+              item.visible && item.popupTemplate != null && 
+              bleLayers.visible) {
             visibleGrids.push(item);
             view.popup.open({
               features: visibleGrids,
@@ -1643,7 +1682,92 @@ require([
         document.getElementById("viewDiv").style.cursor = "auto";
       }
     }
+  } */
+
+  function executeIdentify(event) {
+    if (event.button === 0) {
+    //return visible grid layers ids
+    grids = [mahaDepth1, mahaDepth02];
+    visibleIds = [];
+    grids.forEach(grid => {
+      if (grid.visible == true) {
+        visibleIds.push(grid.allSublayers.items[0].id);
+      }
+    });
+    // Set the geometry to the location of the view click
+    params.layerIds = visibleIds;
+    params.geometry = event.mapPoint;
+    params.mapExtent = view.extent;
+    document.getElementById("viewDiv").style.cursor = "wait";
+
+    // This function returns a promise that resolves to an array of features
+    // A custom popupTemplate is set for each feature based on the layer it
+    // originates from
+    identify
+      .identify(mahaDepth1.url, params)
+      .then(response => {
+        const results = response.results;
+        return results.map(result => {
+          const feature = result.feature;
+          const layerName = result.layerName;
+          console.log(feature);
+          feature.attributes.layerName = layerName;
+          if (layerName === "Maha_Depth100") {
+            feature.popupTemplate = {
+              // autocasts as new PopupTemplate()
+              title: "Maha Creek Flood Study",
+              content: "Flood Depth (1%) - " + Math.round(feature.attributes['Classify.Pixel Value']*10)/10 + ' feet',
+              actions: [generateReport]
+            };
+          } else if (layerName === "Maha_Depth500") {
+              feature.popupTemplate = {
+              // autocasts as new PopupTemplate()
+                title: "Maha Creek Flood Study",
+                content: "Flood Depth (0.2%) - " + Math.round(feature.attributes['Classify.Pixel Value']*10)/10 + ' feet' ,
+                actions: [generateReport]
+              };
+          } else if (layerName === "1 Percent WSEL Image") {
+              feature.popupTemplate = {
+                // autocasts as new PopupTemplate()
+                title: "WSEL (1%)",
+                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
+              };
+          } else if (layerName === ".2 Percent WSEL Image") {
+              feature.popupTemplate = {
+                // autocasts as new PopupTemplate()
+                title: "WSEL (0.2%)",
+                content: Math.round(feature.attributes['Pixel Value']*10)/10 + ' feet' 
+              };
+            } 
+            //console.log(feature.popupTemplate.title);
+          return feature; 
+          
+        });
+        
+      })
+      .then(showPopup); // Send the array of features to showPopup()
+
+    // Shows the results of the identify in a popup once the promise is resolved
+    function showPopup(response) {
+      //console.log(response);
+      visibleGrids = [];
+      response.forEach(item => {
+        if (item.attributes["Classify.Pixel Value"] !== "NoData" && 
+            item.visible && item.popupTemplate != null &&
+            mahaLayers.visible) {
+          visibleGrids.push(item);
+          view.popup.open({
+            features: visibleGrids,
+            location: event.mapPoint
+          });
+        }
+      }); 
+      document.getElementById("viewDiv").style.cursor = "auto";
+    }
   }
+}
+
+  
 
   view.when(() => {
     const layerList = new LayerList({

@@ -44,9 +44,9 @@
         <calcite-action-bar slot="action-bar" scale="m">
           <calcite-action data-action-id="layers" icon="layers" text="Layers" scale="l" title="Layers"></calcite-action>
           <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps" scale="l" title="Basemaps"></calcite-action>
-          <!-- <calcite-action data-action-id="legend" icon="legend" text="Legend"></calcite-action> -->
-          <!-- <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks"></calcite-action> -->
-          <!-- <calcite-action data-action-id="print" icon="print" text="Print"></calcite-action> -->
+          <calcite-action data-action-id="legend" icon="legend" text="Legend" scale="l" title="Legend"></calcite-action>
+          <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks" scale="l" title="Bookmarks"></calcite-action>
+          <calcite-action data-action-id="print" icon="print" text="Print" scale="l" title="Print"></calcite-action>
           <calcite-action data-action-id="information" icon="information" text="Information" scale="l" title="Information"></calcite-action>
         </calcite-action-bar>
 
@@ -59,15 +59,15 @@
           <div id="basemaps-container"></div>
         </calcite-panel>
 
-        <calcite-panel heading="Legend" height-scale="l" data-panel-id="legend" hidden>
+        <calcite-panel heading="Legend" data-panel-id="legend" hidden>
           <div id="legend-container"></div>
         </calcite-panel>
 
-        <calcite-panel heading="Bookmarks" height-scale="l" data-panel-id="bookmarks" hidden>
+        <calcite-panel heading="Bookmarks" data-panel-id="bookmarks" hidden>
           <div id="bookmarks-container"></div>
         </calcite-panel>
 
-        <calcite-panel heading="Print" height-scale="l" data-panel-id="print" hidden>
+        <calcite-panel heading="Print" data-panel-id="print" hidden>
           <div id="print-container"></div>
         </calcite-panel>
 
