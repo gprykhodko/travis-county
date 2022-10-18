@@ -1,5 +1,4 @@
 require([
-    "esri/config",
     "esri/Map",
     "esri/views/MapView",
     "esri/widgets/Legend",
@@ -13,7 +12,6 @@ require([
     "esri/widgets/Slider",
     "esri/Basemap",
     "esri/widgets/BasemapGallery",
-    "esri/widgets/BasemapToggle",
     "esri/widgets/Home",
     "esri/widgets/Search",
     "esri/rest/identify",
@@ -26,8 +24,8 @@ require([
     "esri/layers/support/TileInfo",
     "esri/widgets/Print",
     "esri/widgets/Bookmarks"
-], (esriConfig, Map, MapView, Legend, Graphic, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
-    LayerList, Slider, Basemap, BasemapGallery, BasemapToggle, Home, Search, identify, IdentifyParameters, GroupLayer, WMSLayer, 
+], (Map, MapView, Legend, Graphic, PrintTemplate, PrintParameters, FeatureLayer, MapImageLayer,
+    LayerList, Slider, Basemap, BasemapGallery, Home, Search, identify, IdentifyParameters, GroupLayer, WMSLayer, 
     WebMap, ScaleBar, Measurement, TileInfo, PrintWidget, Bookmarks) => {
 
 //NearMap basemap
@@ -1433,7 +1431,7 @@ require([
     visible: true,
   });
     
-  const map = new WebMap({
+  const map = new Map({
     basemap: "satellite",
     layers: [countyBoundary, subdivs, schoolDistricts, jurisdictions, adminBoundaries, planning, cemeteries, hydrology, 
              parcels, habitat, bcp, parks, roads, cip, roadProjects, txdot, stormWater, 
@@ -1766,8 +1764,6 @@ require([
     }
   }
 }
-
-  
 
   view.when(() => {
     const layerList = new LayerList({
